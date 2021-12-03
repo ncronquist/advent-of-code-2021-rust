@@ -3,7 +3,11 @@ use std::io::{BufRead, BufReader};
 
 fn main() {
     let filename = "movements.txt";
-    let movements = read_file_lines_to_vec(filename);
+    let m: Vec<String> = read_file_lines_to_vec(filename);
+    let movements: Vec<&str> = m
+        .iter()
+        .map(|s| &**s)
+        .collect();
 
     let position = calculate_position(&movements);
     println!("Position: {}", position);
@@ -20,7 +24,7 @@ fn read_file_lines_to_vec(filename: &str) -> Vec<String> {
     return r;
 }
 
-fn calculate_position(movements: &Vec<String>) -> i32 {
+fn calculate_position(movements: &Vec<&str>) -> i32 {
     let (vertical, horizontal) = movements
         .iter()
         .map(|movement| {
@@ -45,7 +49,7 @@ fn calculate_position(movements: &Vec<String>) -> i32 {
     return vertical * horizontal;
 }
 
-fn calculate_better_position(movements: &Vec<String>) -> i32 {
+fn calculate_better_position(movements: &Vec<&str>) -> i32 {
     let (_aim, vertical, horizontal) = movements
         .iter()
         .map(|movement| {
@@ -76,26 +80,26 @@ mod tests {
 
     #[test]
     fn position() {
-        let input: Vec<String> = vec![
-            "forward 5".into(),
-            "down 5".into(),
-            "forward 8".into(),
-            "up 3".into(),
-            "down 8".into(),
-            "forward 2".into(),
+        let input: Vec<&str> = vec![
+            "forward 5",
+            "down 5",
+            "forward 8",
+            "up 3",
+            "down 8",
+            "forward 2",
         ];
         assert_eq!(calculate_position(&input), 150);
     }
 
     #[test]
     fn better_position() {
-        let input: Vec<String> = vec![
-            "forward 5".into(),
-            "down 5".into(),
-            "forward 8".into(),
-            "up 3".into(),
-            "down 8".into(),
-            "forward 2".into(),
+        let input: Vec<&str> = vec![
+            "forward 5",
+            "down 5",
+            "forward 8",
+            "up 3",
+            "down 8",
+            "forward 2",
         ];
         assert_eq!(calculate_better_position(&input), 900);
     }
