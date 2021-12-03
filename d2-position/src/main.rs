@@ -12,6 +12,7 @@ fn main() {
     println!("Better Position: {}", better_position);
 }
 
+// TODO: https://stackoverflow.com/questions/33216514/how-do-i-convert-a-vecstring-to-vecstr
 fn read_file_lines_to_vec(filename: &str) -> Vec<String> {
     let file = File::open(filename).unwrap();
     let reader = BufReader::new(file);
